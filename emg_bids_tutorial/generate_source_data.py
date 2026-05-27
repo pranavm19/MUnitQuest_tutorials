@@ -162,8 +162,8 @@ def main():
         # Torque channel (Nm), scaled to ~1.2 × pct_mvc + noise
         torque = envelope * (pct_mvc * 1.2 + 1.0) + rng.randn(N_SAMPLES) * 0.4
 
-        # Stack: (n_emg + 1, n_samples) — round and save as int16 to save disk space
-        full = np.round(np.vstack([emg_data, torque[np.newaxis, :]])).astype(np.int16)
+        # Stack: (n_emg + 1, n_samples) — save as fp16 to save disk space
+        full = np.vstack([emg_data, torque[np.newaxis, :]]).astype(np.float16)
 
         folder = os.path.join(OUT_DIR, os.path.dirname(stem))
         os.makedirs(folder, exist_ok=True)
