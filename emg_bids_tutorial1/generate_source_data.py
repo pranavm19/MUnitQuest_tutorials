@@ -1,14 +1,23 @@
 """
-Generate synthetic source data for the MUnitQuest tutorial.
+Generate synthetic source data for the MUnitQuest EMG-BIDS tutorial.
 
-Produces 10 HD-EMG recordings (2 subjects, multiple tasks) as:
-  .npy  — raw EMG array, shape (n_channels, n_samples), float32, µV
+Simulates 10 HD-sEMG recordings across 2 subjects and multiple tasks using a
+trapezoidal contraction protocol (rest → ramp up → plateau → ramp down → rest).
+For each recording it writes:
+  .npy  — raw EMG array, shape (n_channels, n_samples), float16, µV
   .npz  — spike trains, keys MU_00…MU_NN, each an int32 array of sample indices
+  .csv  — behavioural event annotations (onset, duration, mvc_level, event_type)
 
-Also writes recordings.csv and channels_electrodes.csv into source_data/.
+Also regenerates recordings.csv (linking each recording to its three data files)
+into source_data/. The other CSV files (channels_electrodes, participants, etc.)
+are edited manually and are not overwritten by this script.
 
-Run from the repo root:
-    python tutorial/generate_source_data.py
+Run this script first, then run assemble_bids.py to build the BIDS dataset.
+
+Usage:
+    python generate_source_data.py
+
+Requires: numpy
 """
 
 import os
@@ -50,6 +59,47 @@ RECORDINGS = [
     ('02', '02', 'isometric30percentMVC', '2', 'TA_4x4',      'sub2/ta_1grid_trial2'),
     ('02', '02', 'isometric30percentMVC', '3', 'TA_4x4',      'sub2/ta_1grid_trial3'),
 ]
+
+
+def make_events(pct_mvc: int, fs: int) -> list:
+    """Return event rows for one trapezoidal contraction recording."""
+    seg = [5*fs, 5*fs, 20*fs, 5*fs, 5*fs]
+
+    if pct_mvc == 0:
+        return [{"onset": 0.0, "duration": float(DURATION), "sample": 0,
+                 "mvc_level": 0.0, "event_type": "rest",
+                 "description": "Resting EMG recording"}]
+
+    rate = pct_mvc / 5  # % MVC/s (5-second ramp)
+    s_on   = seg[0]
+    s_hold = seg[0] + seg[1]
+    s_down = seg[0] + seg[1] + seg[2]
+    s_off  = seg[0] + seg[1] + seg[2] + seg[3]
+    return [
+        {"onset": s_on/fs,   "duration": 0.0,         "sample": s_on,
+         "mvc_level": 0.0,   "event_type": "muscle_on",
+         "description": "Start of voluntary contraction"},
+        {"onset": s_on/fs,   "duration": seg[1]/fs,    "sample": s_on,
+         "mvc_level": 0.0,   "event_type": "linear_ramp",
+         "description": f"Ramp up to {pct_mvc}% MVC at {rate:.0f}% MVC/s"},
+        {"onset": s_hold/fs, "duration": seg[2]/fs,    "sample": s_hold,
+         "mvc_level": float(pct_mvc), "event_type": "steady_hold",
+         "description": f"Steady isometric contraction at {pct_mvc}% MVC"},
+        {"onset": s_down/fs, "duration": seg[3]/fs,    "sample": s_down,
+         "mvc_level": float(pct_mvc), "event_type": "linear_ramp",
+         "description": f"Ramp down from {pct_mvc}% MVC at {rate:.0f}% MVC/s"},
+        {"onset": s_off/fs,  "duration": 0.0,          "sample": s_off,
+         "mvc_level": 0.0,   "event_type": "muscle_off",
+         "description": "End of voluntary contraction"},
+    ]
+
+
+def write_events_csv(path: str, events: list) -> None:
+    fields = ["onset", "duration", "sample", "mvc_level", "event_type", "description"]
+    with open(path, 'w', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(events)
 
 
 def make_envelope(pct_mvc: int) -> np.ndarray:
@@ -142,9 +192,11 @@ def render_emg(spike_trains: dict, n_emg: int, envelope: np.ndarray,
 
 
 def write_recordings_csv(path: str) -> None:
-    rows = [['sub', 'ses', 'task_name', 'run', 'setup', 'path_to_emg_file', 'path_to_labels_file']]
+    rows = [['sub', 'ses', 'task_name', 'run', 'setup',
+             'path_to_emg_file', 'path_to_labels_file', 'path_to_events_file']]
     for sub, ses, task, run, setup, stem in RECORDINGS:
-        rows.append([sub, ses, task, run, setup, stem + '.npy', stem + '_spike_trains.npz'])
+        rows.append([sub, ses, task, run, setup,
+                     stem + '.npy', stem + '_spike_trains.npz', stem + '_events.csv'])
     with open(path, 'w', newline='') as f:
         csv.writer(f).writerows(rows)
 
@@ -173,6 +225,9 @@ def main():
 
         np.save(emg_path, full)
         np.savez_compressed(labels_path, **spike_trains)
+
+        events_path = os.path.join(OUT_DIR, stem + '_events.csv')
+        write_events_csv(events_path, make_events(pct_mvc, FS))
 
         total_spikes = sum(len(v) for v in spike_trains.values())
         print(f"  {stem:35s}  shape={str(full.shape):18s}  {n_mu} MUs  {total_spikes} spikes")

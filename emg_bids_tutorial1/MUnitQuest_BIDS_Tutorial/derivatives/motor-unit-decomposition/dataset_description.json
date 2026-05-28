@@ -4,7 +4,8 @@
   "DatasetType": "derivative",
   "GeneratedBy": [
     {
-      "Name": "motor-unit-decomposition"
+      "Name": "motor-unit-decomposition",
+      "CodeURL": "https://github.com/MUnitQuest/MUnitQuest_tutorials/tree/main/emg_bids_tutorial1"
     }
   ]
 }
