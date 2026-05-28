@@ -14,20 +14,11 @@
   },
 
   "decomposition": {
-    "method": "semi-automated",
+    "method": "simulation",
     "pipelines": [
       {
-        "name": "MUEdit",
-        "version": "1.0",
-        "description": "Convolutive blind source separation for HDsEMG decomposition in MATLAB."
-      }
-    ],
-    "manualEditing": "yes",
-    "editingTools": [
-      {
-        "name": "MUEdit",
-        "version": "1.0",
-        "description": "Convolutive blind source separation for HDsEMG decomposition in MATLAB."
+        "name": "MUnitQuest Tutorial",
+        "codeUrl": "https://github.com/MUnitQuest/MUnitQuest_tutorials/tree/main/emg_bids_tutorial1"
       }
     ]
   }

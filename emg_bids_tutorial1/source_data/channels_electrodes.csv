@@ -1,4 +1,4 @@
-setup,electrode_name,channel_name,type,units,x,y,z,coordinate_system,reference,group,target_muscle,material,ElectrodeManufacturer,ElectrodeManufacturersModelName,impedance,low_cutoff,high_cutoff
+setup,electrode_name,channel_name,type,units,x,y,z,coordinate_system,reference,group,target_muscle,material,manufacturer,manufactureres_model_name,impedance,low_cutoff,high_cutoff
 VL_3x4s_1i,E1,EMG001,EMG,uV,0,0,0,grid1,R1,grid1,right vastus lateralis,Ag/AgCl,OTBioelettronica,HD08MM0304,n/a,10,900
 VL_3x4s_1i,E2,EMG002,EMG,uV,8,0,0,grid1,R1,grid1,right vastus lateralis,Ag/AgCl,OTBioelettronica,HD08MM0304,n/a,10,900
 VL_3x4s_1i,E3,EMG003,EMG,uV,16,0,0,grid1,R1,grid1,right vastus lateralis,Ag/AgCl,OTBioelettronica,HD08MM0304,n/a,10,900

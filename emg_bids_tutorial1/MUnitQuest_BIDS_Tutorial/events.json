@@ -1,0 +1,22 @@
+{
+  "sample": {
+    "Description": "Sample index of the event onset at the recording sampling frequency"
+  },
+  "mvc_level": {
+    "Description": "Target force level as a percentage of maximum voluntary contraction",
+    "Units": "%MVC"
+  },
+  "event_type": {
+    "Description": "Category of the event",
+    "Levels": {
+      "rest": "Resting EMG recording with no voluntary contraction",
+      "muscle_on": "Start of voluntary contraction",
+      "linear_ramp": "Linear ramp in target force level",
+      "steady_hold": "Steady isometric contraction at constant target force",
+      "muscle_off": "End of voluntary contraction"
+    }
+  },
+  "description": {
+    "Description": "Free-text description of the event"
+  }
+}
