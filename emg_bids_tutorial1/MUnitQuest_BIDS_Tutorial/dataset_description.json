@@ -1,0 +1,20 @@
+{
+  "Name": "MUnitQuest Example Dataset",
+  "BIDSVersion": "1.11.1",
+  "DatasetType": "raw",
+  "License": "CC0",
+  "Authors": [
+    "MUnitQuest"
+  ],
+  "Funding": [],
+  "ReferencesAndLinks": [],
+  "EthicsApprovals": [],
+  "InstitutionName": "",
+  "InstitutionAddress": "",
+  "GeneratedBy": [
+    {
+      "Name": "MUnitQuest Tutorial",
+      "CodeURL": "https://github.com/MUnitQuest/MUnitQuest_tutorials/tree/main/emg_bids_tutorial1"
+    }
+  ]
+}

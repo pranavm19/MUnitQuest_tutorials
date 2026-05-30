@@ -1,0 +1,6 @@
+onset,duration,sample,mvc_level,event_type,description
+5.0,0.0,10240,0.0,muscle_on,Start of voluntary contraction
+5.0,5.0,10240,0.0,linear_ramp,Ramp up to 50% MVC at 10% MVC/s
+10.0,20.0,20480,50.0,steady_hold,Steady isometric contraction at 50% MVC
+30.0,5.0,61440,50.0,linear_ramp,Ramp down from 50% MVC at 10% MVC/s
+35.0,0.0,71680,0.0,muscle_off,End of voluntary contraction

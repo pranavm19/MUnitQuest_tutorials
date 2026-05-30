@@ -23,7 +23,7 @@ Sign-up to the competition platform by creating an account: https://www.codabenc
 
 ## 1.2 Creating Teams/Organizations
 You can create organizations enabling participation in competitions as a team.
-Click `Create Organization`
+Click `Create Organization`<br/>
 <img width="218" height="419" alt="Pasted image 20260420091115" src="https://github.com/user-attachments/assets/efe01121-2148-45f4-8526-dd1fc4115521" />
 
 Within the form `Create an Organization` provide the information necessary and press `submit`
@@ -83,7 +83,51 @@ For each potential phase, there exists a leaderboard pivoted by the tasks per ph
 **Coming soon**
 # 2. Data Challenge
 Specific information for the Data Challenge
-<br/>**Coming soon**
+<br/>
+## 2.1 Submission Format
+codabench requires submission to be a zip-Archive. The zip-Archive should have the following structure for the automated validator to run.
+```
+root/
+└── BIDSDataset  -> name of the dataset
+    ├── dataset_description.json
+    ├── participants.tsv
+    ├── participants.json
+    ├── README
+    ├── sub-01/
+    │   ├── emg/
+    │   │   ├── sub-01_task-xxx_emg.edf
+    │   │   ├── sub-01_task-xxx_channels.tsv
+    │   │   ├── sub-01_task-xxx_events.tsv
+    │   │   ├── sub-01_task-xxx_electrodes.tsv
+    │   │   └── sub-01_task-xxx_coordsystem.json
+    │   └── ...
+    └── sub-02/
+        └── ...
+```
+
+>[!Warning]
+>To save storage, please do not upload the actual EMG-recordings, but only the metadata.
+>After successful metadata validation, we will provide a link to the cloud storage, where to
+>upload the full dataset
+
+## 2.2 How to Submit
+1. In the codabech-competition navigate to `My Submissions` (see 1.4.3)
+2. Choose whether to submit as yourself or as a registered team (see 1.2)
+3. Upload the zip-Archive
+4. Wait for preliminary, automated dataset validation results
+5. Download submission artifacts (especially `detailed_results.html`) by navigating to your submission and downloading `Output from scoring step`
+6. Investigate `detailed_results.html`, which contains an upload link, if and only if the metadata validation has been successful
+7. Leaderboard **coming soon**
+
+<img width="1000" height="500" alt="image" src="https://github.com/user-attachments/assets/daa9d930-3caa-40e5-96c3-c67ba9d452c0" />
+
+<img width="750" height="400" alt="image" src="https://github.com/user-attachments/assets/94a72293-3eb9-4509-9fdf-0ade9b6a33d8" />
+
+<img width="750" height="400" alt="image" src="https://github.com/user-attachments/assets/be14c161-6216-43b8-a19c-be6c2d2b1b3c" />
+
+<img width="1288" height="317" alt="image" src="https://github.com/user-attachments/assets/b4f91796-a24d-4753-b819-f5fcc20d847e" />
+
+
 # 3. Algorithm Challenge
 Specific information for the Algorithm Challenge
 <br/>**Coming soon**
