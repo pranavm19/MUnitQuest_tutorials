@@ -115,11 +115,19 @@ root/
 2. Choose whether to submit as yourself or as a registered team (see 1.2)
 3. Upload the zip-Archive
 4. Wait for preliminary, automated dataset validation results
+
+>[!Tip]
+>The integrated stdout/stderr terminal window may be incomplete. To see the full stdout/stderr of your submission, you can view to the logs displayed in detail, when clicking on your submission and navigating to the `LOGS`-Tab.
+><img width="811" height="125" alt="image" src="https://github.com/user-attachments/assets/3ad7d494-768b-466a-ad3c-50d6eb3bff2c" />
+
+
 5. Download submission artifacts (especially `detailed_results.html`) by navigating to your submission and downloading `Output from scoring step`
 6. Investigate `detailed_results.html`, which contains an upload link, if and only if the metadata validation has been successful
 7. Choose whether the submission should appear on the competition's leaderboard, by pressing the `table`-icon in the submissions overview
-   >[!Warning]
-   >We highly encourage you to upload different datasets and, thus, enable multiple leaderboard-effective submissions. If you, however, wish to update an already submitted dataset on the leaderboard, make sure to remove the old version from the leaderboard. Please notify the organizers when submitting multiple datasets!
+
+>[!Warning]
+>We highly encourage you to upload different datasets and, thus, enable multiple leaderboard-effective submissions. If you, however, wish to update an already submitted dataset on the leaderboard, make sure to remove the old version from the leaderboard. Please notify the organizers when submitting multiple datasets!
+
 
 <img width="1000" height="500" alt="image" src="https://github.com/user-attachments/assets/daa9d930-3caa-40e5-96c3-c67ba9d452c0" />
 
